@@ -1,5 +1,5 @@
 import { IUserRepository } from "../interface/userRepository.Interface";
-import { User } from "../models/user.model";
+import { UserModel } from "../models/user.model";
 import { PrismaClient } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 
@@ -10,7 +10,7 @@ export class UserRepository implements IUserRepository {
         this._prisma = new PrismaClient()
     }
 
-    async CreateUser(data: User): Promise<User> {
+    async CreateUser(data: UserModel): Promise<UserModel> {
         try {
             const createdUser = await this._prisma.user.create({ data });
             return createdUser;
@@ -25,17 +25,17 @@ export class UserRepository implements IUserRepository {
     }
 
 
-    async FindUser(mail: string): Promise<User> {
+    async FindUser(mail: string): Promise<UserModel> {
         const user = await this._prisma.user.findFirst({ where: { mail } })
         if (!user) throw Error("User not found")
         return Promise.resolve(user)
     }
-    async FindUserById(id: number): Promise<User> {
+    async FindUserById(id: number): Promise<UserModel> {
         const user = await this._prisma.user.findFirst({ where: { id } })
         if (!user) throw Error("User not found")
         return Promise.resolve(user)
     }
-    async UpdateUser(data: User): Promise<User> {
+    async UpdateUser(id: number, data: UserModel): Promise<UserModel> {
         return this._prisma.user.update({
             where: { id: data.id },
             data
