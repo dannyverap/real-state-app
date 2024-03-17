@@ -1,6 +1,6 @@
 import { Role } from "@prisma/client"
 
-export class User {
+export class UserModel {
     constructor(
         public readonly phone: string,
         public readonly mail: string,
