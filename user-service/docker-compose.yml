@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      - POSTGRES_USER=user_service
+      - POSTGRES_PASSWORD=user_service_password
+      - POSTGRES_DB=user_service
+    volumes:
+      - ./db-data/postgres/:/var/lib/postgresql/data
