@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { LoginInput, SignUpInput } from "../dto/user.dto";
+import { LoginInput, SignUpInput, VerificationInput } from "../dto/user.dto";
 import { RequestValidator } from "../utils/requestValidator";
 import { UserService } from "../service/userService";
 import { UserRepository } from "../repository/user.Repository";
@@ -45,6 +45,20 @@ router.get("/verify", authSession, (req: RequestExt, res: Response) => {
     try {
         userService.GetVerificationCode(req.payload)
         return res.status(200).json("Verification code send, you have 30 minutes to validate")
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json(error.message)
+        };
+        return res.status(500).json("Something when wrong");
+    }
+})
+
+router.post("/verify", authSession, async (req: RequestExt, res: Response, next: NextFunction) => {
+    try {
+        const { errors, input } = await RequestValidator(VerificationInput, req.body)
+        if (errors) return res.status(400).json(errors)
+        await userService.VerifyUser(req.payload!.id, input)
+        return res.status(200).json("User successfully verified.")
     } catch (error) {
         if (error instanceof Error) {
             return res.status(500).json(error.message)
