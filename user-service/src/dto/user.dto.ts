@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, Length} from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsString, Length } from "class-validator";
 
 export class LoginInput {
     @IsEmail()
@@ -12,4 +12,10 @@ export class SignUpInput extends LoginInput {
     @IsString()
     @IsNotEmpty()
     phone: string;
+}
+
+export class VerificationInput {
+    @IsNumber()
+    @IsNotEmpty()
+    verification_code: number;
 }
