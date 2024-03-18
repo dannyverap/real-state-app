@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.535.0",
     "@prisma/client": "5.10.2",
     "@types/node": "^20.11.24",
     "bcrypt": "^5.1.1",
