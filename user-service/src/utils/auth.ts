@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../models/user.model"
 import "dotenv/config";
+import { payload } from "../interface/payload.interface";
 
 export const GenerateSalt = async () => {
     return await bcrypt.genSalt();
@@ -33,11 +34,11 @@ export const GenerateToken = ({ id, mail, user_type }: UserModel): string => {
 }
 
 
-export const VerifyToken = (token: string): UserModel | false => {
+export const VerifyToken = (token: string): payload | false => {
     try {
         if (token !== "") {
             const payload = jwt.verify(token, JWT_SECRET);
-            return payload as UserModel;
+            return payload as payload;
         }
         return false;
     } catch (error) {
