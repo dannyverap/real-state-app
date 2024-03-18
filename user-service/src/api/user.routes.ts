@@ -1,8 +1,10 @@
 import express, { NextFunction, Request, Response } from "express";
-import { SignUpInput } from "../dto/user.dto";
+import { LoginInput, SignUpInput } from "../dto/user.dto";
 import { RequestValidator } from "../utils/requestValidator";
 import { UserService } from "../service/userService";
 import { UserRepository } from "../repository/user.Repository";
+import { authSession } from "../middleware/authSession";
+import { RequestExt } from "../interface/request.interface";
 
 const router = express.Router()
 
@@ -16,6 +18,33 @@ router.post("/signup", async (req: Request, res: Response, next: NextFunction
         if (errors) return res.status(400).json(errors)
         const data = await userService.SignUpUser(input)
         return res.status(201).json(data)
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json(error.message)
+        };
+        return res.status(500).json("Something when wrong");
+    }
+})
+
+router.post("/login", async (req: Request, res: Response, next: NextFunction
+) => {
+    try {
+        const { errors, input } = await RequestValidator(LoginInput, req.body)
+        if (errors) return res.status(400).json(errors)
+        const token = await userService.LoginUser(input)
+        return res.status(200).json(token)
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json(error.message)
+        };
+        return res.status(500).json("Something when wrong");
+    }
+})
+
+router.get("/verify", authSession, (req: RequestExt, res: Response) => {
+    try {
+        userService.GetVerificationCode(req.payload)
+        return res.status(200).json("Verification code send, you have 30 minutes to validate")
     } catch (error) {
         if (error instanceof Error) {
             return res.status(500).json(error.message)
