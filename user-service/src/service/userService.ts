@@ -2,6 +2,7 @@
 import { IUserRepository } from "../interface/userRepository.Interface";
 import { UserModel } from "../models/user.model";
 import { CreateHashedPassword, GenerateSalt, GenerateToken, GenerateVerificationCode, VerifyPassword } from "../utils/auth";
+import { SendVerificationCode } from "../utils/mailer";
 
 export class UserService {
 
@@ -45,8 +46,8 @@ export class UserService {
         this._repository.UpdateUser(
             input.id, { ...user, verification_code, expiry }
         )
-        //TODO: Send code to mail
+        SendVerificationCode(user.mail, verification_code)
 
-        return {verification_code, expiry}
+        return { verification_code, expiry }
     }
 }
