@@ -9,7 +9,6 @@ export const GenerateSalt = async () => {
 };
 
 const JWT_SECRET = process.env.JWT_SECRET || ""
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET
 
 export const CreateHashedPassword = async (password: string, salt: string): Promise<string> => {
     return await bcrypt.hash(password, salt)

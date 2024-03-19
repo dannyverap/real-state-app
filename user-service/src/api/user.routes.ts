@@ -1,5 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
-import { LoginInput, SignUpInput, VerificationInput } from "../dto/user.dto";
+
+import { SignupInput } from "../dto/SignupInput.dto";
+import { LoginInput } from "../dto/LoginInput.dto";
+import { VerificationInput } from "../dto/VerificationInput.dto";
 import { RequestValidator } from "../utils/requestValidator";
 import { UserService } from "../service/userService";
 import { UserRepository } from "../repository/user.Repository";
@@ -14,7 +17,7 @@ export const userService = new UserService(new UserRepository())
 router.post("/signup", async (req: Request, res: Response, next: NextFunction
 ) => {
     try {
-        const { errors, input } = await RequestValidator(SignUpInput, req.body)
+        const { errors, input } = await RequestValidator(SignupInput, req.body)
         if (errors) return res.status(400).json(errors)
         const data = await userService.SignUpUser(input)
         return res.status(201).json(data)
