@@ -37,7 +37,7 @@ export class UserRepository implements IUserRepository {
     }
     async UpdateUser(id: number, data: UserModel): Promise<UserModel> {
         return this._prisma.user.update({
-            where: { id: data.id },
+            where: { id },
             data
         })
     }
