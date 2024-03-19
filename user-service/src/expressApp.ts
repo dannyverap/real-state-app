@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import userRoutes from "./api/user.routes"
+import profileRoutes from "./api/profile.routes"
 import { authSession } from "./middleware/authSession"
 import { RequestExt } from "./interface/request.interface";
 
@@ -14,5 +15,6 @@ app.get("/checkPayload", authSession, (req: RequestExt, res: Response) => {
 })
 
 app.use("/user", userRoutes)
+app.use("/profile", profileRoutes)
 
 export default app
