@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "driver": "pg",
+        "user": "client_service",
+        "password": "client_service_password",
+        "host": "localhost",
+        "database": "client_service",
+        "port":"5431"
+    }
+}
