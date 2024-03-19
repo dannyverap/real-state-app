@@ -14,17 +14,19 @@ datasource db {
 }
 
 model User {
-  id                Int      @id @default(autoincrement())
+  id                Int       @id @default(autoincrement())
   phone             String
-  mail              String   @unique
+  mail              String    @unique
   password          String
   salt              String
-  user_type         Role     @default(LANDLORD)
+  user_type         Role      @default(LANDLORD)
   verification_code Float?
   expiry            DateTime?
-  verified          Boolean @default(false)
+  verified          Boolean   @default(false)
   first_name        String?
   last_name         String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now()) @updatedAt
 }
 
 enum Role {
