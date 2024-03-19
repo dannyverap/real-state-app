@@ -1,5 +1,6 @@
 CREATE TABLE "clients" (
-    "user_id" bigserial PRIMARY KEY,
+    "client_id" bigserial PRIMARY KEY,
+    "national_id" varchar UNIQUE NOT NULL,
     "phone" varchar NOT NULL,
     "mail" varchar UNIQUE NOT NULL,
     "first_name" varchar,
@@ -9,4 +10,5 @@ CREATE TABLE "clients" (
     "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
-CREATE INDEX ON "clients" ("mail")
+CREATE INDEX ON "clients" ("mail");
+CREATE INDEX ON "clients" ("national_id");
