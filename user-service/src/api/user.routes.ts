@@ -44,9 +44,9 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction
     }
 })
 
-router.get("/verify", authSession, (req: RequestExt, res: Response) => {
+router.get("/verify", authSession, async (req: RequestExt, res: Response) => {
     try {
-        userService.GetVerificationCode(req.payload)
+        await userService.GetVerificationCode(req.payload)
         return res.status(200).json("Verification code send, you have 30 minutes to validate")
     } catch (error) {
         if (error instanceof Error) {
