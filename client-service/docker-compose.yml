@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=client_service
+      - POSTGRES_PASSWORD=client_service_password
+      - POSTGRES_DB=client_service
+    ports:
+      - "5431:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local
